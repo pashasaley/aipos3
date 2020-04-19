@@ -248,19 +248,19 @@ def delete_tag(id_tag):
 def update_tag(id_tag, data):
     tag = Tag.query.get(id_tag)
     name = data['name']
-    paper_id = int(data['paper_id'])
+    paper_name = data['paper_name']
     if name != '':
         tag.name = name
-    if paper_id != '':
-        tag.paper_id = paper_id
+    if paper_name != '':
+        tag.paper_id = Paper.query.filter_by(name=paper_name).first().id
     db.session.commit()
     return
 
 
 def add_tag(data):
     name = data['name']
-    paper_id = int(data['paper_id'])
-    tag = Tag(name=name, paper_id=paper_id)
+    paper_name = data['paper_name']
+    tag = Tag(name=name, paper_id=Paper.query.filter_by(name=paper_name).first().id)
     db.session.add(tag)
     db.session.commit()
     return
@@ -310,13 +310,13 @@ def update_paper(id_paper, data):
     paper = Paper.query.get(id_paper)
     name = data['name']
     description = data['description']
-    conference_id = int(data['conference_id'])
+    conference_name = data['conference_name']
     if name != '':
         paper.name = name
     if description != '':
         paper.description = description
-    if conference_id != '':
-        paper.conference_id = conference_id
+    if conference_name != '':
+        paper.conference_id = Conference.query.filter_by(name=conference_name).first().id
     db.session.commit()
     return
 
@@ -324,8 +324,9 @@ def update_paper(id_paper, data):
 def add_paper(data):
     name = data['name']
     description = data['description']
-    conference_id = int(data['conference_id'])
-    paper = Paper(name=name, description=description, conference_id=conference_id)
+    conference_name = data['conference_name']
+    paper = Paper(name=name, description=description,
+                  conference_id=Conference.query.filter_by(name=conference_name).first().id)
     db.session.add(paper)
     db.session.commit()
     return
@@ -389,19 +390,19 @@ def update_pr_time(id_pr_time, data):
     pr_time = PresentationTime.query.get(id_pr_time)
     start = data['start']
     end = data['end']
-    room_id = int(data['room_id'])
-    speaker_id = int(data['speaker_id'])
-    paper_id = int(data['paper_id'])
+    room_name = data['room_name']
+    speaker_name = data['speaker_name']
+    paper_name = data['paper_name']
     if start != '':
         pr_time.start = start
     if end != '':
         pr_time.end = end
-    if room_id != '':
-        pr_time.room_id = room_id
-    if speaker_id != '':
-        pr_time.speaker = speaker_id
-    if paper_id != '':
-        pr_time.paper_id = paper_id
+    if room_name != '':
+        pr_time.room_id = Room.query.filter_by(name=room_name).first().id
+    if speaker_name != '':
+        pr_time.speaker = User.query.filter_by(username=speaker_name).first().id
+    if paper_name != '':
+        pr_time.paper_id = Paper.query.filter_by(name=paper_name).first().id
     db.session.commit()
     return
 
@@ -409,11 +410,13 @@ def update_pr_time(id_pr_time, data):
 def add_pr_time(data):
     start = data['start']
     end = data['end']
-    room_id = int(data['room_id'])
-    speaker_id = int(data['speaker_id'])
-    paper_id = int(data['paper_id'])
-    pr_time = PresentationTime(start=start, end=end, speaker=speaker_id,
-                               room_id=room_id, paper_id=paper_id)
+    room_name = data['room_name']
+    speaker_name = data['speaker_name']
+    paper_name = data['paper_name']
+    pr_time = PresentationTime(start=start, end=end,
+                               speaker=User.query.filter_by(username=speaker_name).first().id,
+                               room_id=Room.query.filter_by(name=room_name).first().id,
+                               paper_id=Paper.query.filter_by(name=paper_name).first().id)
     db.session.add(pr_time)
     db.session.commit()
     return

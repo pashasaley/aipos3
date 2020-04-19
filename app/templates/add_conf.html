@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class=".col-4 mt-4 sm">
+                <h1>Add conference</h1>
+                <form action="" method="post">
+                    <div>
+                        <p>Name:</p>
+                        <input class="form-control" name="name" >
+                    </div>
+                    <div class="mt-3">
+                        <p>Start:</p>
+                        <input class="form-control" type="date" name="start">
+                    </div>
+                    <div class="mt-3">
+                        <p>End:</p>
+                        <input class="form-control" type="date" name="end">
+                    </div>
+                    <button class="btn btn-secondary mt-4">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
