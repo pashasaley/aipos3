@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class=".col-4 mt-4 sm">
+                <h1>Add presentation time</h1>
+                <form action="" method="post">
+                    <div>
+                        <p>Start:</p>
+                        <a>Old: {{ pres.start }}</a>
+                        <input class="form-control" type="datetime-local" name="start" >
+                    </div>
+                    <div>
+                        <p>End:</p>
+                        <a>Old: {{ pres.end }}</a>
+                        <input class="form-control" type="datetime-local" name="end" >
+                    </div>
+                    <div class="form-group mt-3">
+                        <p>Paper</p>
+                        <a>Old: {{ pres.paper_name }}</a>
+                        <select class="form-control" name="paper_name">
+                            {% for paper in papers %}
+                                <option>{{ paper.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group mt-3">
+                        <p>Room</p>
+                        <a>Old: {{ pres.room_name }}</a>
+                        <select class="form-control" name="room_name">
+                            {% for room in rooms %}
+                                <option>{{ room.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group mt-3">
+                        <p>Speaker</p>
+                        <a>Old: {{ pres.speaker_username }}</a>
+                        <select class="form-control" name="speaker_name">
+                            {% for speaker in speakers %}
+                                <option>{{ speaker.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary mt-4">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -24,7 +24,6 @@ def get_all_users():
 
 def get_user(id_user):
     user = User.query.get(id_user)
-    response = []
     presentations = []
     for item in user.presentation:
         presentations.append({
@@ -32,12 +31,12 @@ def get_user(id_user):
             'presentation_start': item.start,
             'presentation_end': item.end
         })
-    response.append({
+    response = {
         'id': user.id,
         'username': user.username,
         'email': user.email,
         'presentations': presentations
-    })
+    }
     return response
 
 
@@ -92,7 +91,6 @@ def get_all_conferences():
 
 def get_conference(id_conference):
     conference = Conference.query.get(id_conference)
-    response = []
     papers = []
     for item in conference.paper:
         papers.append({
@@ -100,13 +98,13 @@ def get_conference(id_conference):
             'paper_name': item.name,
             'paper_description': item.description
         })
-    response.append({
+    response = {
         'id': conference.id,
         'name': conference.name,
         'start': conference.start,
         'end': conference.end,
         'papers': papers
-    })
+    }
     return response
 
 
@@ -164,7 +162,6 @@ def get_all_rooms():
 
 def get_room(id_room):
     room = Room.query.get(id_room)
-    response = []
     presentations = []
     for item in room.presentation:
         presentations.append({
@@ -172,12 +169,12 @@ def get_room(id_room):
             'presentation_start': item.start,
             'presentation_end': item.end
         })
-    response.append({
+    response = {
         'id': room.id,
         'name': room.name,
         'location': room.location,
         'presentations': presentations
-    })
+    }
     return response
 
 
@@ -226,15 +223,14 @@ def get_all_tags():
 
 def get_tag(id_tag):
     tag = Tag.query.get(id_tag)
-    response = []
     paper = Paper.query.get(tag.paper_id)
-    response.append({
+    response = {
         'id': tag.id,
         'name': tag.name,
         'paper_id': paper.id,
         'paper_name': paper.name,
         'paper_description': paper.description
-    })
+    }
     return response
 
 
@@ -285,9 +281,8 @@ def get_all_papers():
 
 def get_paper(id_paper):
     paper = Paper.query.get(id_paper)
-    response = []
     conf = Conference.query.get(paper.conference_id)
-    response.append({
+    response = {
         'id': paper.id,
         'name': paper.name,
         'description': paper.description,
@@ -295,7 +290,7 @@ def get_paper(id_paper):
         'conf_name': conf.name,
         'conf_start': conf.start,
         'conf_end': conf.end,
-    })
+    }
     return response
 
 
@@ -358,11 +353,10 @@ def get_all_pr_times():
 
 def get_pr_time(id_pr_time):
     pr_time = PresentationTime.query.get(id_pr_time)
-    response = []
     paper = Paper.query.get(pr_time.paper_id)
     speaker = User.query.get(pr_time.speaker)
     room = Room.query.get(pr_time.room_id)
-    response.append({
+    response = {
         'id': pr_time.id,
         'start': pr_time.start,
         'end': pr_time.end,
@@ -375,7 +369,7 @@ def get_pr_time(id_pr_time):
         'speaker_id': speaker.id,
         'speaker_username': speaker.username,
         'speaker_email': speaker.email
-    })
+    }
     return response
 
 
