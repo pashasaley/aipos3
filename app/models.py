@@ -15,8 +15,8 @@ class User(db.Model):
 class Conference(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
-    start = db.Column(db.DateTime)
-    end = db.Column(db.DateTime)
+    start = db.Column(db.Date)
+    end = db.Column(db.Date)
     paper = db.relationship('Paper', backref='conference', cascade="all,delete", lazy='dynamic')
 
     def __repr__(self):
