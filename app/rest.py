@@ -45,6 +45,7 @@ def delete_user(id_user):
     user = User.query.get(id_user)
     db.session.delete(user)
     db.session.commit()
+    return
 
 
 def update_user(id_user, data):
@@ -56,6 +57,7 @@ def update_user(id_user, data):
     if email != '':
         user.email = email
     db.session.commit()
+    return
 
 
 def add_user(data):
@@ -64,6 +66,7 @@ def add_user(data):
     user = User(username=username, email=email)
     db.session.add(user)
     db.session.commit()
+    return
 
 
 def get_all_conferences():
@@ -111,6 +114,7 @@ def delete_conference(id_conference):
     conference = Conference.query.get(id_conference)
     db.session.delete(conference)
     db.session.commit()
+    return
 
 
 def update_conference(id_conference, data):
@@ -125,6 +129,7 @@ def update_conference(id_conference, data):
     if end != '':
         conference.end = end
     db.session.commit()
+    return
 
 
 def add_conference(data):
@@ -134,6 +139,7 @@ def add_conference(data):
     conference = Conference(name=name, start=start, end=end)
     db.session.add(conference)
     db.session.commit()
+    return
 
 
 def get_all_rooms():
@@ -179,6 +185,7 @@ def delete_room(id_room):
     room = Room.query.get(id_room)
     db.session.delete(room)
     db.session.commit()
+    return
 
 
 def update_room(id_room, data):
@@ -190,6 +197,7 @@ def update_room(id_room, data):
     if location != '':
         room.location = location
     db.session.commit()
+    return
 
 
 def add_room(data):
@@ -198,6 +206,7 @@ def add_room(data):
     room = Room(name=name, location=location)
     db.session.add(room)
     db.session.commit()
+    return
 
 
 def get_all_tags():
@@ -233,6 +242,7 @@ def delete_tag(id_tag):
     tag = Tag.query.get(id_tag)
     db.session.delete(tag)
     db.session.commit()
+    return
 
 
 def update_tag(id_tag, data):
@@ -244,6 +254,7 @@ def update_tag(id_tag, data):
     if paper_id != '':
         tag.paper_id = paper_id
     db.session.commit()
+    return
 
 
 def add_tag(data):
@@ -252,6 +263,7 @@ def add_tag(data):
     tag = Tag(name=name, paper_id=paper_id)
     db.session.add(tag)
     db.session.commit()
+    return
 
 
 def get_all_papers():
@@ -288,13 +300,14 @@ def get_paper(id_paper):
 
 
 def delete_paper(id_paper):
-    paper = Tag.query.get(id_paper)
+    paper = Paper.query.get(id_paper)
     db.session.delete(paper)
     db.session.commit()
+    return
 
 
 def update_paper(id_paper, data):
-    paper = Tag.query.get(id_paper)
+    paper = Paper.query.get(id_paper)
     name = data['name']
     description = data['description']
     conference_id = int(data['conference_id'])
@@ -305,6 +318,7 @@ def update_paper(id_paper, data):
     if conference_id != '':
         paper.conference_id = conference_id
     db.session.commit()
+    return
 
 
 def add_paper(data):
@@ -314,6 +328,7 @@ def add_paper(data):
     paper = Paper(name=name, description=description, conference_id=conference_id)
     db.session.add(paper)
     db.session.commit()
+    return
 
 
 def get_all_pr_times():
@@ -364,13 +379,14 @@ def get_pr_time(id_pr_time):
 
 
 def delete_pr_time(id_pr_time):
-    pr_time = Tag.query.get(id_pr_time)
+    pr_time = PresentationTime.query.get(id_pr_time)
     db.session.delete(pr_time)
     db.session.commit()
+    return
 
 
 def update_pr_time(id_pr_time, data):
-    pr_time = Tag.query.get(id_pr_time)
+    pr_time = PresentationTime.query.get(id_pr_time)
     start = data['start']
     end = data['end']
     room_id = int(data['room_id'])
@@ -387,6 +403,7 @@ def update_pr_time(id_pr_time, data):
     if paper_id != '':
         pr_time.paper_id = paper_id
     db.session.commit()
+    return
 
 
 def add_pr_time(data):
@@ -399,3 +416,4 @@ def add_pr_time(data):
                                room_id=room_id, paper_id=paper_id)
     db.session.add(pr_time)
     db.session.commit()
+    return

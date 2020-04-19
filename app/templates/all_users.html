@@ -19,10 +19,10 @@
           <td>
               <div class="container">
                   <div class="row justify-content-end">
-                      <form method="post" action="">
+                      <form method="post" action="{{ url_for('delete_users') }}">
                           <div class="mr-1">
-                              <input type="hidden" name="id_entry" value="{{ user_item.id }}">
-                              <button name="delete{{ user_item.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                              <input type="hidden" name="id_user" value="{{ user_item.id }}">
+                              <button name="delete" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                           </div>
                       </form>
                       <div class="mr-1">

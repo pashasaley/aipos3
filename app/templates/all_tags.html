@@ -19,9 +19,9 @@
           <td>
               <div class="container">
                   <div class="row justify-content-end">
-                      <form method="post" action="">
+                      <form method="post" action="{{ url_for('delete_tags') }}">
                           <div class="mr-1">
-                              <input type="hidden" name="id_entry" value="{{ tag_item.id }}">
+                              <input type="hidden" name="id_tag" value="{{ tag_item.id }}">
                               <button name="delete{{ tag_item.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                           </div>
                       </form>
