@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}<title>All users</title>{% endblock %}
+{% block content %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+  <tbody>
+  {% for user_item in users %}
+      <tr>
+          <th scope="row">{{ user_item.id }}</th>
+          <td name="{{ user_item.username }}">{{ user_item.username }}</td>
+          <td name="{{ user_item.email }}">{{ user_item.email }}</td></div>
+          <td>
+              <div class="container">
+                  <div class="row justify-content-end">
+                      <form method="post" action="">
+                          <div class="mr-1">
+                              <input type="hidden" name="id_entry" value="{{ user_item.id }}">
+                              <button name="delete{{ user_item.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                          </div>
+                      </form>
+                      <div class="mr-1">
+                          <a name="edit{{ user_item.id }}" href="/edit_entry/{{ user_item.id }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </td>
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class=".col-4 mt-4 sm">
+                <a class="btn btn-dark" href="">Add user</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

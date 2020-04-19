@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}<title>All presentations</title>{% endblock %}
+{% block content %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Speaker</th>
+                <th scope="col">Paper</th>
+                <th scope="col">Room</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+  <tbody>
+  {% for presentation_item in presentations %}
+      <tr>
+          <th scope="row">{{ presentation_item.id }}</th>
+          <td name="{{ presentation_item.start }}">{{ presentation_item.start }}</td></div>
+          <td name="{{ presentation_item.end }}">{{ presentation_item.end }}</td></div>
+          <td name="{{ presentation_item.speaker_id }}"><a href="/user/{{ presentation_item.speaker_id }}">{{ presentation_item.speaker_username }}</a></td></div>
+          <td name="{{ presentation_item.paper_id }}"><a href="/paper/{{ presentation_item.paper_id }}">{{ presentation_item.paper_name }}</a></td></div>
+          <td name="{{ presentation_item.room_id }}"><a href="/room/{{ presentation_item.room_id }}">{{ presentation_item.room_name }}</a></td></div>
+          <td>
+              <div class="container">
+                  <div class="row justify-content-end">
+                      <form method="post" action="">
+                          <div class="mr-1">
+                              <input type="hidden" name="id_entry" value="{{ presentation_item.id }}">
+                              <button name="delete{{ presentation_item.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                          </div>
+                      </form>
+                      <div class="mr-1">
+                          <a name="edit{{ presentation_item.id }}" href="/edit_entry/{{ presentation_item.id }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </td>
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class=".col-4 mt-4 sm">
+                <a class="btn btn-dark" href="">Add presentation</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

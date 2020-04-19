@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}<title>All rooms</title>{% endblock %}
+{% block content %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+  <tbody>
+  {% for room_item in rooms %}
+      <tr>
+          <th scope="row">{{ room_item.id }}</th>
+          <td name="{{ room_item.name }}">{{ room_item.name }}</td>
+          <td name="{{ room_item.location }}">{{ room_item.location }}</td></div>
+          <td>
+              <div class="container">
+                  <div class="row justify-content-end">
+                      <form method="post" action="">
+                          <div class="mr-1">
+                              <input type="hidden" name="id_entry" value="{{ room_item.id }}">
+                              <button name="delete{{ room_item.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                          </div>
+                      </form>
+                      <div class="mr-1">
+                          <a name="edit{{ room_item.id }}" href="/edit_entry/{{ room_item.id }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </td>
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class=".col-4 mt-4 sm">
+                <a class="btn btn-dark" href="">Add room</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

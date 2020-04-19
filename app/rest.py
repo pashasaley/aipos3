@@ -204,10 +204,10 @@ def get_all_tags():
     tags = Tag.query.all()
     response = []
     for tag in tags:
-        paper = Paper.qeury.get(tag.paper_id)
+        paper = Paper.query.get(tag.paper_id)
         response.append({
             'id': tag.id,
-            'username': tag.name,
+            'name': tag.name,
             'paper_id': paper.id,
             'paper_name': paper.name,
             'paper_description': paper.description
@@ -218,10 +218,10 @@ def get_all_tags():
 def get_tag(id_tag):
     tag = Tag.query.get(id_tag)
     response = []
-    paper = Paper.qeury.get(tag.paper_id)
+    paper = Paper.query.get(tag.paper_id)
     response.append({
         'id': tag.id,
-        'username': tag.name,
+        'name': tag.name,
         'paper_id': paper.id,
         'paper_name': paper.name,
         'paper_description': paper.description
@@ -258,10 +258,10 @@ def get_all_papers():
     papers = Paper.query.all()
     response = []
     for paper in papers:
-        conf = Conference.qeury.get(paper.conference_id)
+        conf = Conference.query.get(paper.conference_id)
         response.append({
             'id': paper.id,
-            'username': paper.name,
+            'name': paper.name,
             'description': paper.description,
             'conf_id': conf.id,
             'conf_name': conf.name,
@@ -274,10 +274,10 @@ def get_all_papers():
 def get_paper(id_paper):
     paper = Paper.query.get(id_paper)
     response = []
-    conf = Conference.qeury.get(paper.conference_id)
+    conf = Conference.query.get(paper.conference_id)
     response.append({
         'id': paper.id,
-        'username': paper.name,
+        'name': paper.name,
         'description': paper.description,
         'conf_id': conf.id,
         'conf_name': conf.name,
@@ -320,9 +320,9 @@ def get_all_pr_times():
     pr_times = PresentationTime.query.all()
     response = []
     for pr_time in pr_times:
-        paper = Conference.qeury.get(pr_time.paper_id)
-        speaker = User.qeury.get(pr_time.speaker_id)
-        room = Room.qeury.get(pr_time.room_id)
+        paper = Paper.query.get(pr_time.paper_id)
+        speaker = User.query.get(pr_time.speaker)
+        room = Room.query.get(pr_time.room_id)
         response.append({
             'id': pr_time.id,
             'start': pr_time.start,
@@ -341,11 +341,11 @@ def get_all_pr_times():
 
 
 def get_pr_time(id_pr_time):
-    pr_time = Paper.query.get(id_pr_time)
+    pr_time = PresentationTime.query.get(id_pr_time)
     response = []
-    paper = Conference.qeury.get(pr_time.paper_id)
-    speaker = User.qeury.get(pr_time.speaker_id)
-    room = Room.qeury.get(pr_time.room_id)
+    paper = Paper.query.get(pr_time.paper_id)
+    speaker = User.query.get(pr_time.speaker)
+    room = Room.query.get(pr_time.room_id)
     response.append({
         'id': pr_time.id,
         'start': pr_time.start,

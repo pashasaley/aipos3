@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}<title>All tags</title>{% endblock %}
+{% block content %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Paper</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+  <tbody>
+  {% for tag_item in tags %}
+      <tr>
+          <th scope="row">{{ tag_item.id }}</th>
+          <td name="{{ tag_item.name }}">{{ tag_item.name }}</td>
+          <td name="{{ tag_item.paper_id }}"><a href="/paper/{{ tag_item.paper_id }}">{{ tag_item.paper_name }}</a></td></div>
+          <td>
+              <div class="container">
+                  <div class="row justify-content-end">
+                      <form method="post" action="">
+                          <div class="mr-1">
+                              <input type="hidden" name="id_entry" value="{{ tag_item.id }}">
+                              <button name="delete{{ tag_item.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                          </div>
+                      </form>
+                      <div class="mr-1">
+                          <a name="edit{{ tag_item.id }}" href="/edit_entry/{{ tag_item.id }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </td>
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class=".col-4 mt-4 sm">
+                <a class="btn btn-dark" href="">Add tag</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
