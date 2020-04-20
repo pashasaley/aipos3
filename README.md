@@ -4,7 +4,7 @@
 2) вводим source env/bin/activate
 3) устанавливаем рекомендации в корне проекта вводим pip install -r requirements.txt
 ## Настройки бд
-1) в файле app/__init__.py подставить свои данные в строке app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://name_user:password@localhost/name_db'
+1) в файле app/\_\_init\_\_.py подставить свои данные в строке app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://name_user:password@localhost/name_db'
 2) в корне проекта вводим export FLASK_APP=db.py
 3) python -m flask db init
 4) python -m flask db migrate
