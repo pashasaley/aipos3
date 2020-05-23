@@ -1,7 +1,11 @@
+from flask import request
+
 from app.models import User, Conference, Room, PresentationTime, Paper, Tag
-from app import db
+from app import db, app
+import json
 
 
+@app.route('/user', methods=['GET'])
 def get_all_users():
     users = User.query.all()
     response = []
@@ -10,8 +14,8 @@ def get_all_users():
         for item in user.presentation:
             presentations.append({
                 'presentation_id': item.id,
-                'presentation_start': item.start,
-                'presentation_end': item.end
+                'presentation_start': str(item.start),
+                'presentation_end': str(item.end)
             })
         response.append({
             'id': user.id,
@@ -19,17 +23,18 @@ def get_all_users():
             'email': user.email,
             'presentations': presentations
         })
-    return response
+    return json.dumps(response)
 
 
+@app.route('/user/<id_user>', methods=['GET'])
 def get_user(id_user):
     user = User.query.get(id_user)
     presentations = []
     for item in user.presentation:
         presentations.append({
             'presentation_id': item.id,
-            'presentation_start': item.start,
-            'presentation_end': item.end
+            'presentation_start': str(item.start),
+            'presentation_end': str(item.end)
         })
     response = {
         'id': user.id,
@@ -37,9 +42,10 @@ def get_user(id_user):
         'email': user.email,
         'presentations': presentations
     }
-    return response
+    return json.dumps(response)
 
 
+@app.route('/user/<id_user>', methods=['DELETE'])
 def delete_user(id_user):
     user = User.query.get(id_user)
     db.session.delete(user)
@@ -47,7 +53,9 @@ def delete_user(id_user):
     return
 
 
-def update_user(id_user, data):
+@app.route('/user/<id_user>', methods=['POST'])
+def update_user(id_user):
+    data = request.get_json()
     user = User.query.get(id_user)
     username = data['username']
     email = data['email']
@@ -59,7 +67,9 @@ def update_user(id_user, data):
     return
 
 
-def add_user(data):
+@app.route('/user/add', methods=['POST'])
+def add_user():
+    data = request.json
     username = data['username']
     email = data['email']
     user = User(username=username, email=email)
@@ -68,6 +78,7 @@ def add_user(data):
     return
 
 
+@app.route('/conference', methods=['GET'])
 def get_all_conferences():
     conferences = Conference.query.all()
     response = []
@@ -75,20 +86,21 @@ def get_all_conferences():
     for conference in conferences:
         for item in conference.paper:
             papers.append({
-                'paper_id': item.id,
-                'paper_name': item.name,
+                'paper_id': str(item.id),
+                'paper_name': str(item.name),
                 'paper_description': item.description
             })
         response.append({
             'id': conference.id,
             'name': conference.name,
-            'start': conference.start,
-            'end': conference.end,
+            'start': str(conference.start),
+            'end': str(conference.end),
             'papers': papers
         })
-    return response
+    return json.dumps(response)
 
 
+@app.route('/conference/<id_conference>', methods=['GET'])
 def get_conference(id_conference):
     conference = Conference.query.get(id_conference)
     papers = []
@@ -101,13 +113,14 @@ def get_conference(id_conference):
     response = {
         'id': conference.id,
         'name': conference.name,
-        'start': conference.start,
-        'end': conference.end,
+        'start': str(conference.start),
+        'end': str(conference.end),
         'papers': papers
     }
-    return response
+    return json.dumps(response)
 
 
+@app.route('/conference/<id_conference>', methods=['DELETE'])
 def delete_conference(id_conference):
     conference = Conference.query.get(id_conference)
     db.session.delete(conference)
@@ -115,7 +128,9 @@ def delete_conference(id_conference):
     return
 
 
-def update_conference(id_conference, data):
+@app.route('/conference/<id_conference>', methods=['GET', 'POST'])
+def update_conference(id_conference):
+    data = request.get_json()
     conference = Conference.query.get(id_conference)
     name = data['name']
     start = data['start']
@@ -130,7 +145,9 @@ def update_conference(id_conference, data):
     return
 
 
-def add_conference(data):
+@app.route('/conference/add', methods=['POST'])
+def add_conference():
+    data = request.get_json()
     name = data['name']
     start = data['start']
     end = data['end']
@@ -140,6 +157,7 @@ def add_conference(data):
     return
 
 
+@app.route('/room', methods=['GET'])
 def get_all_rooms():
     rooms = Room.query.all()
     response = []
@@ -148,8 +166,8 @@ def get_all_rooms():
         for item in room.presentation:
             presentations.append({
                 'presentation_id': item.id,
-                'presentation_start': item.start,
-                'presentation_end': item.end
+                'presentation_start': str(item.start),
+                'presentation_end': str(item.end)
             })
         response.append({
             'id': room.id,
@@ -157,17 +175,18 @@ def get_all_rooms():
             'location': room.location,
             'presentations': presentations
         })
-    return response
+    return json.dumps(response)
 
 
+@app.route('/room/<id_room>', methods=['GET'])
 def get_room(id_room):
     room = Room.query.get(id_room)
     presentations = []
     for item in room.presentation:
         presentations.append({
             'presentation_id': item.id,
-            'presentation_start': item.start,
-            'presentation_end': item.end
+            'presentation_start': str(item.start),
+            'presentation_end': str(item.end)
         })
     response = {
         'id': room.id,
@@ -175,9 +194,10 @@ def get_room(id_room):
         'location': room.location,
         'presentations': presentations
     }
-    return response
+    return json.dumps(response)
 
 
+@app.route('/room/<id_room>', methods=['DELETE'])
 def delete_room(id_room):
     room = Room.query.get(id_room)
     db.session.delete(room)
@@ -185,7 +205,9 @@ def delete_room(id_room):
     return
 
 
-def update_room(id_room, data):
+@app.route('/room/<id_room>', methods=['POST'])
+def update_room(id_room):
+    data = request.get_json()
     room = Room.query.get(id_room)
     name = data['name']
     location = data['location']
@@ -197,7 +219,9 @@ def update_room(id_room, data):
     return
 
 
-def add_room(data):
+@app.route('/room/add', methods=['POST'])
+def add_room():
+    data = request.get_json()
     name = data['name']
     location = data['location']
     room = Room(name=name, location=location)
@@ -206,6 +230,7 @@ def add_room(data):
     return
 
 
+@app.route('/tag', methods=['GET'])
 def get_all_tags():
     tags = Tag.query.all()
     response = []
@@ -218,9 +243,10 @@ def get_all_tags():
             'paper_name': paper.name,
             'paper_description': paper.description
         })
-    return response
+    return json.dumps(response)
 
 
+@app.route('/tag/<id_tag>', methods=['GET'])
 def get_tag(id_tag):
     tag = Tag.query.get(id_tag)
     paper = Paper.query.get(tag.paper_id)
@@ -231,9 +257,10 @@ def get_tag(id_tag):
         'paper_name': paper.name,
         'paper_description': paper.description
     }
-    return response
+    return json.dumps(response)
 
 
+@app.route('/tag/<id_tag>', methods=['DELETE'])
 def delete_tag(id_tag):
     tag = Tag.query.get(id_tag)
     db.session.delete(tag)
@@ -241,7 +268,9 @@ def delete_tag(id_tag):
     return
 
 
-def update_tag(id_tag, data):
+@app.route('/tag/<id_tag>', methods=['POST'])
+def update_tag(id_tag):
+    data = request.get_json()
     tag = Tag.query.get(id_tag)
     name = data['name']
     paper_name = data['paper_name']
@@ -253,7 +282,9 @@ def update_tag(id_tag, data):
     return
 
 
-def add_tag(data):
+@app.route('/tag/add', methods=['POST'])
+def add_tag():
+    data = request.get_json()
     name = data['name']
     paper_name = data['paper_name']
     tag = Tag(name=name, paper_id=Paper.query.filter_by(name=paper_name).first().id)
@@ -262,6 +293,7 @@ def add_tag(data):
     return
 
 
+@app.route('/paper', methods=['GET'])
 def get_all_papers():
     papers = Paper.query.all()
     response = []
@@ -273,12 +305,13 @@ def get_all_papers():
             'description': paper.description,
             'conf_id': conf.id,
             'conf_name': conf.name,
-            'conf_start': conf.start,
-            'conf_end': conf.end,
+            'conf_start': str(conf.start),
+            'conf_end': str(conf.end),
         })
-    return response
+    return json.dumps(response)
 
 
+@app.route('/paper/<id_paper>', methods=['GET'])
 def get_paper(id_paper):
     paper = Paper.query.get(id_paper)
     conf = Conference.query.get(paper.conference_id)
@@ -288,12 +321,13 @@ def get_paper(id_paper):
         'description': paper.description,
         'conf_id': conf.id,
         'conf_name': conf.name,
-        'conf_start': conf.start,
-        'conf_end': conf.end,
+        'conf_start': str(conf.start),
+        'conf_end': str(conf.end),
     }
-    return response
+    return json.dumps(response)
 
 
+@app.route('/paper/<id_paper>', methods=['DELETE'])
 def delete_paper(id_paper):
     paper = Paper.query.get(id_paper)
     db.session.delete(paper)
@@ -301,7 +335,9 @@ def delete_paper(id_paper):
     return
 
 
-def update_paper(id_paper, data):
+@app.route('/paper/<id_paper>', methods=['PUT'])
+def update_paper(id_paper):
+    data = request.get_json()
     paper = Paper.query.get(id_paper)
     name = data['name']
     description = data['description']
@@ -316,7 +352,9 @@ def update_paper(id_paper, data):
     return
 
 
-def add_paper(data):
+@app.route('/paper/add', methods=['POST'])
+def add_paper():
+    data = request.get_json()
     name = data['name']
     description = data['description']
     conference_name = data['conference_name']
@@ -327,6 +365,7 @@ def add_paper(data):
     return
 
 
+@app.route('/presentation', methods=['GET'])
 def get_all_pr_times():
     pr_times = PresentationTime.query.all()
     response = []
@@ -336,8 +375,8 @@ def get_all_pr_times():
         room = Room.query.get(pr_time.room_id)
         response.append({
             'id': pr_time.id,
-            'start': pr_time.start,
-            'end': pr_time.end,
+            'start': str(pr_time.start),
+            'end': str(pr_time.end),
             'paper_id': paper.id,
             'paper_name': paper.name,
             'paper_description': paper.description,
@@ -348,9 +387,10 @@ def get_all_pr_times():
             'speaker_username': speaker.username,
             'speaker_email': speaker.email
         })
-    return response
+    return json.dumps(response)
 
 
+@app.route('/presentation/<id_pr_time>', methods=['GET'])
 def get_pr_time(id_pr_time):
     pr_time = PresentationTime.query.get(id_pr_time)
     paper = Paper.query.get(pr_time.paper_id)
@@ -358,8 +398,8 @@ def get_pr_time(id_pr_time):
     room = Room.query.get(pr_time.room_id)
     response = {
         'id': pr_time.id,
-        'start': pr_time.start,
-        'end': pr_time.end,
+        'start': str(pr_time.start),
+        'end': str(pr_time.end),
         'paper_id': paper.id,
         'paper_name': paper.name,
         'paper_description': paper.description,
@@ -370,9 +410,10 @@ def get_pr_time(id_pr_time):
         'speaker_username': speaker.username,
         'speaker_email': speaker.email
     }
-    return response
+    return json.dumps(response)
 
 
+@app.route('/presentation/<id_pr_time>', methods=['DELETE'])
 def delete_pr_time(id_pr_time):
     pr_time = PresentationTime.query.get(id_pr_time)
     db.session.delete(pr_time)
@@ -380,7 +421,9 @@ def delete_pr_time(id_pr_time):
     return
 
 
-def update_pr_time(id_pr_time, data):
+@app.route('/presentation/<id_pr_time>', methods=['PUT'])
+def update_pr_time(id_pr_time):
+    data = request.get_json()
     pr_time = PresentationTime.query.get(id_pr_time)
     start = data['start']
     end = data['end']
@@ -401,7 +444,9 @@ def update_pr_time(id_pr_time, data):
     return
 
 
-def add_pr_time(data):
+@app.route('/presentation/add', methods=['POST'])
+def add_pr_time():
+    data = request.get_json()
     start = data['start']
     end = data['end']
     room_name = data['room_name']
@@ -414,3 +459,7 @@ def add_pr_time(data):
     db.session.add(pr_time)
     db.session.commit()
     return
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port='5001')
